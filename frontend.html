@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Kapı açma uygulaması
+    </title>
+  </head>
+  <body>
+    <button
+      id="kapiac"
+      style="
+        display: inline-block;
+        width: calc(100% - 60px);
+        font-size: 100px;
+        margin: 30px 0 0 30px;
+      "
+      onclick="(async () => {
+        const result = await fetch('/iot/be');     
+        const kapiAcButton = document.getElementById('kapiac');
+        const oldColor = kapiAcButton.style.backgroundColor;
+        const json = await result.json();
+        kapiAcButton.style.backgroundColor = json.success ? 'green' : 'red';
+        setTimeout(() => {
+          kapiAcButton.style.backgroundColor = oldColor;
+        }, 1000);
+      })()"
+    >
+      kapıyı aç
+    </button>
+    <script>
+      const kapiAcButton = document.getElementById('kapiac');
+      kapiAcButton.style.height = (window.innerHeight - 80).toString() + 'px';
+    </script>
+  </body>
+</html>
